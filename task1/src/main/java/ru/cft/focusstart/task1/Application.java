@@ -17,8 +17,12 @@ public class Application {
 
     public static String createTable(String tableSize)throws IllegalArgumentException{
         int sizeTable = Integer.parseInt(tableSize);
-        InputValidator.checkTableSize(sizeTable);
-        TableMulti tableMulti = new TableMulti(sizeTable);
-        return tableMulti.generateTable();
+
+        if (InputValidator.checkTableSize(sizeTable)) {
+            TableMulti tableMulti = new TableMulti(sizeTable);
+            return tableMulti.generateTable();
+        }
+
+        return "";
     }
 }

@@ -29,6 +29,7 @@ public class InputValidator {
             return true;
         }
 
-        throw new IllegalArgumentException(MSG_ERR_SIZE_TABLE);
+        System.err.println(MSG_ERR_SIZE_TABLE);
+        return false;
     }
 }
