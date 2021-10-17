@@ -7,13 +7,14 @@ public class TableMulti {
     public static final String NEW_LINE_SYMBOL = "\n";
     public static final String INDENT_SYMBOL = " ";
 
-    private final StringBuilder builderTable = new StringBuilder();
+    private final StringBuilder builderTable;
     private final int size;
     private final int bigNumber;
 
     public TableMulti(int size) {
         this.size = size;
         bigNumber = size * size;
+        builderTable = new StringBuilder(bigNumber);
     }
 
     public String generateTable(){
