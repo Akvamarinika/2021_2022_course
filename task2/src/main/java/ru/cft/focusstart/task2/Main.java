@@ -1,4 +1,4 @@
-package ru.cft.focusstart.task2.main;
+package ru.cft.focusstart.task2;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.ParseException;
@@ -17,7 +17,6 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         try {
-
             CommandLineArgs commandLineArgs = new CommandLineArgs();
             UserOption userOption = commandLineArgs.parse(args);
             ParsingFiles parsingFiles = new ParserFile();
