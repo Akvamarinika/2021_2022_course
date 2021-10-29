@@ -2,6 +2,9 @@ plugins {
     id 'java'
 }
 
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -17,5 +20,9 @@ dependencies {
     annotationProcessor 'org.projectlombok: lombok: 1.18.20'
 
     implementation group: 'commons-cli', name: 'commons-cli', version: '1.4'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+
 
 }
