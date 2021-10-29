@@ -26,3 +26,6 @@ java -jar task2.jar -i in.txt -f out.txt (вывод в файл);
 * slf4j-api, ver. 1.7.32
 * logback-classic, ver. 1.2.3
 * commons-cli, ver. 1.4
+
+При некорректной кодировке добавить в VM Options: 
+-Dfile.encoding=UTF-8
