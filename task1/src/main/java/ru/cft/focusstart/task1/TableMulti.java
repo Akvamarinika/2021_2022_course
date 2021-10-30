@@ -22,39 +22,42 @@ public class TableMulti {
         String indentMain;
         String delimiterLine = generateDelimiterLine();
 
-        for(int row = 0; row <= size; row++){
-            if (row != 0){
-                builderTable.append(NEW_LINE_SYMBOL)
-                            .append(delimiterLine)
-                            .append(NEW_LINE_SYMBOL);
-            }
+        addTableHeader();
 
+        for(int row = 1; row <= size; row++){
+
+            builderTable.append(NEW_LINE_SYMBOL)
+                    .append(delimiterLine)
+                    .append(NEW_LINE_SYMBOL);
 
             indentFirstCol = createIndent(size, row);
             builderTable.append(indentFirstCol)
                         .append(row);
 
             for (int col = 1; col <= size; col++){
-               if (row == 0){
-                   indentMain = createIndent(bigNumber, col);
-
-                   builderTable.append(VERTICAL_DELIMITER)
-                               .append(indentMain)
-                               .append(col);
-               } else {
                    int number = row * col;
                    indentMain = createIndent(bigNumber, number);
 
                    builderTable.append(VERTICAL_DELIMITER)
                                .append(indentMain)
                                .append(number);
-               }
             }
         }
 
-        builderTable.replace(builderTable.indexOf("0"), builderTable.indexOf("0")+1, INDENT_SYMBOL);
-
         return builderTable.toString();
+    }
+
+    private void addTableHeader(){
+        String indentMain;
+        builderTable.append(INDENT_SYMBOL.repeat(countSymbolsInNumber(size)));
+
+        for(int row = 1; row <= size; row++) {
+            indentMain = createIndent(bigNumber, row);
+
+            builderTable.append(VERTICAL_DELIMITER)
+                    .append(indentMain)
+                    .append(row);
+        }
     }
 
     private String createIndent(int numMaxLength, int number){
@@ -75,7 +78,8 @@ public class TableMulti {
 
 
     private int countSymbolsInNumber(int number){
-        return (number == 0) ? 1 : (int)Math.log10(number) + 1;
+        //return (number == 0) ? 1 : (int)Math.log10(number) + 1;
+        return (number == 0) ? 1 : (int) Math.ceil(Math.log10(Math.abs(number) + 0.5));
     }
 
     private String generateDelimiterFirstColumn(){
