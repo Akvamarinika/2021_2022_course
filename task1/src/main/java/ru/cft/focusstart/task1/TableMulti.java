@@ -78,7 +78,6 @@ public class TableMulti {
 
 
     private int countSymbolsInNumber(int number){
-        //return (number == 0) ? 1 : (int)Math.log10(number) + 1;
         return (number == 0) ? 1 : (int) Math.ceil(Math.log10(Math.abs(number) + 0.5));
     }
 
