@@ -1,4 +1,4 @@
-package ru.cft.focusstart.task3.minesweeper.app;
+package ru.cft.focusstart.task3.minesweeper;
 
 import ru.cft.focusstart.task3.minesweeper.view.*;
 
