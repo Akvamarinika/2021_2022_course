@@ -1,4 +1,4 @@
-package ru.cft.focusstart.task3.minesweeper.model.cells;
+package ru.cft.focusstart.task3.minesweeper.model.field;
 
 import java.util.Objects;
 
