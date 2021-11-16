@@ -14,6 +14,7 @@ public enum StateCell {
     NUM_7(7),
     NUM_8(8),
     BOMB,
+    BOMBED,
     NO_BOMB
     ;
 
@@ -31,9 +32,6 @@ public enum StateCell {
 
     public StateCell getNextState(){
        return switch (this) {
-            case OFF_THE_FIELD -> OFF_THE_FIELD;
-            case CLOSED -> MARKED;
-            case MARKED -> CLOSED;
             case EMPTY -> NUM_1;
             case NUM_1 -> NUM_2;
             case NUM_2 -> NUM_3;
@@ -42,8 +40,9 @@ public enum StateCell {
             case NUM_5 -> NUM_6;
             case NUM_6 -> NUM_7;
             case NUM_7, NUM_8 -> NUM_8;
-            case BOMB -> BOMB;
-            case NO_BOMB -> NO_BOMB;
-        };
+           default -> OFF_THE_FIELD;
+       };
     }
+
+
 }
