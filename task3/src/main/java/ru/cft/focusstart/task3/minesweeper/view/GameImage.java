@@ -15,6 +15,8 @@ public enum GameImage {
     NUM_7("7.png"),
     NUM_8("8.png"),
     BOMB("mine.png"),
+    BOMBED("mineRed.png"),
+    NO_BOMB("mineNo.png"),
     TIMER("timer.png"),
     BOMB_ICON("mineImage.png"),
     ;

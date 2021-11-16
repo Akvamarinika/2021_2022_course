@@ -47,6 +47,10 @@ public class SettingsWindow extends JDialog {
         radioGroup.setSelected(radioButton.getModel(), true);
     }
 
+    public GameType getGameType() {
+        return gameType;
+    }
+
     public void setGameTypeListener(GameTypeListener gameTypeListener) {
         this.gameTypeListener = gameTypeListener;
     }
