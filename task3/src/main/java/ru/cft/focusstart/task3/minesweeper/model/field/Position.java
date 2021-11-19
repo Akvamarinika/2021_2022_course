@@ -38,6 +38,6 @@ public class Position {
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(y, x);
     }
 }

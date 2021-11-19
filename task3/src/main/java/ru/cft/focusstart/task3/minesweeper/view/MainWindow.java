@@ -197,5 +197,4 @@ public class MainWindow extends JFrame {
         mainLayout.setConstraints(label, gbc);
         contentPane.add(label);
     }
-
 }

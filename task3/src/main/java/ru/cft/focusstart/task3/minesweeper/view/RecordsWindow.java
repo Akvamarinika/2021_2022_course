@@ -6,7 +6,7 @@ import java.awt.*;
 public class RecordsWindow extends JDialog {
     private RecordNameListener nameListener;
 
-    public RecordsWindow(JFrame frame) {
+    public RecordsWindow(JFrame frame, RecordNameListener nameListener) {
         super(frame, "New Record", true);
 
         JTextField nameField = new JTextField();
@@ -19,6 +19,7 @@ public class RecordsWindow extends JDialog {
         contentPane.add(nameField);
         contentPane.add(createOkButton(nameField));
 
+        this.nameListener = nameListener;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(210, 120));
         setResizable(false);

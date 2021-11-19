@@ -8,12 +8,15 @@ public class LoseWindow extends JDialog {
     private ActionListener newGameListener;
     private ActionListener exitListener;
 
-    public LoseWindow(JFrame owner) {
+    public LoseWindow(JFrame owner, ActionListener newGameListener, ActionListener exitListener) {
         super(owner, "Lose", true);
 
         GridBagLayout layout = new GridBagLayout();
         Container contentPane = getContentPane();
         contentPane.setLayout(layout);
+
+        this.newGameListener = newGameListener;
+        this.exitListener = exitListener;
 
         contentPane.add(createLoseLabel(layout));
         contentPane.add(createNewGameButton(layout));

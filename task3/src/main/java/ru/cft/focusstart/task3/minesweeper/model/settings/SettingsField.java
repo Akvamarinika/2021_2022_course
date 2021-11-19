@@ -13,12 +13,12 @@ public class SettingsField {
     private static int height;
     private static int countBombs;
 
-    public SettingsField(GameType gameType) {
+    public static void init(GameType gameType) {
         SettingsField.gameType = gameType;
         determinationSizeOfPlayingField();
     }
 
-    private void generateListPositions(int weight, int height) {
+    private static void generateListPositions(int weight, int height) {
         listPositions = new ArrayList<>();
         for (int y = 0; y < height; y++){
             for (int x = 0; x < weight; x++){
@@ -27,10 +27,7 @@ public class SettingsField {
         }
     }
 
-    private void determinationSizeOfPlayingField(){
-        //                break;
-        //            default:
-        //                log.warn("Неизвестный тип игры. По умолчанию тип: Novice.");
+    private static void determinationSizeOfPlayingField(){
         switch (gameType) {
             case NOVICE -> {
                 countBombs = ParamField.NOVICE.getCountBombs();
@@ -49,6 +46,7 @@ public class SettingsField {
             }
         }
         generateListPositions(weight, height);
+        log.info("Определен тип игры: {}, размер поля: {} Х {}", gameType, weight, height);
     }
 
     public static ArrayList<Position> getListPositions() {

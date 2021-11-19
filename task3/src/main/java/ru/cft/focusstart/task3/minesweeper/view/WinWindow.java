@@ -8,12 +8,15 @@ public class WinWindow extends JDialog {
     private ActionListener newGameListener;
     private ActionListener exitListener;
 
-    public WinWindow(JFrame owner) {
+    public WinWindow(JFrame owner, ActionListener newGameListener, ActionListener exitListener) {
         super(owner, "Win", true);
 
         GridBagLayout layout = new GridBagLayout();
         Container contentPane = getContentPane();
         contentPane.setLayout(layout);
+
+        this.newGameListener = newGameListener;
+        this.exitListener = exitListener;
 
         contentPane.add(createLoseLabel(layout));
         contentPane.add(createNewGameButton(layout));
