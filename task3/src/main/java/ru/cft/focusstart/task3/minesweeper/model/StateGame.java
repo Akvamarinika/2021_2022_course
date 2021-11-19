@@ -1,6 +1,6 @@
 package ru.cft.focusstart.task3.minesweeper.model;
 
-public enum GameState {
+public enum StateGame {
     PLAYED,
     LOST,
     WINED
