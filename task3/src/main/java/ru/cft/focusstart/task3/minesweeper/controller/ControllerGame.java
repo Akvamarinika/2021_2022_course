@@ -6,6 +6,7 @@ import ru.cft.focusstart.task3.minesweeper.model.StateGame;
 import ru.cft.focusstart.task3.minesweeper.model.field.Cell;
 import ru.cft.focusstart.task3.minesweeper.model.field.Position;
 import ru.cft.focusstart.task3.minesweeper.model.settings.SettingsField;
+import ru.cft.focusstart.task3.minesweeper.records.Gamer;
 import ru.cft.focusstart.task3.minesweeper.records.Records;
 import ru.cft.focusstart.task3.minesweeper.timer.TimerGame;
 import ru.cft.focusstart.task3.minesweeper.view.*;
@@ -91,33 +92,57 @@ public class ControllerGame {
     private void sendViewNewStateGame(){
         if (modelGame.isWin()){
             timerGame.stopTimer();
+            Gamer newGamer = new Gamer(gameType, timerGame.getTimeSec());
 
-            new RecordsWindow(mainWindow, name -> {
-                records.replaceRecordInFile(gameType, name, timerGame.getTimeSec());
-                log.info("Получено имя победителя: {}", name);
-            });
+            if (records.isBestGamer(newGamer)) {
+                new RecordsWindow(mainWindow, name -> {
+                    newGamer.setName(name);
+                    records.addBestGamer(newGamer);
+                    records.writeJsonInFile();
+
+                    log.info("Получено имя победителя: {}", name);
+                });
+            }
+
 
             new WinWindow(mainWindow, e -> startNewGame(), exit -> mainWindow.dispose());
         }
 
         if (modelGame.isGameOver()){
             timerGame.stopTimer();
-
             new LoseWindow(mainWindow, e -> startNewGame(), exit -> mainWindow.dispose());
-
         }
     }
 
     public void startNewGame(){
         this.modelGame = new ModelGame(gameType);
         timerGame.stopTimer();
-
+        loadTableRecords();
         createPlayingField(SettingsField.getWeight(), SettingsField.getHeight(), SettingsField.getListPositions());
         mainWindow.setBombsCount(SettingsField.getCountBombs());
         //mainWindow.setTimerValue(0);
 
-        loadTableRecords();
+        //loadTableRecords();
 
+    }
+
+    private void loadTableRecords(){
+        records.readRecordsFromFile();
+        List<Gamer> bestGamers = records.getBestGamers();
+
+        //if (bestGamers != null) {
+            for (Gamer gamer : bestGamers){
+
+                switch (gamer.getGameType()) {
+                    case NOVICE -> highScoresWindow.setNoviceRecord(gamer.getName(), gamer.getTime());
+                    case MEDIUM -> highScoresWindow.setMediumRecord(gamer.getName(), gamer.getTime());
+                    case EXPERT -> highScoresWindow.setExpertRecord(gamer.getName(), gamer.getTime());
+                    default -> {
+                        return;
+                    }
+                }
+            }
+       // }
     }
 
     private void createPlayingField(int weight, int height, List<Position> allPositions){
@@ -129,8 +154,9 @@ public class ControllerGame {
     }
 
     private void updatePlayingField(List<Cell> cells){
-        System.out.println(cells);
+
         for (Cell cell : cells){
+            log.info("lst: {}", cell.isFlagged());
             updatePlayingField(cell);
         }
     }
@@ -156,32 +182,30 @@ public class ControllerGame {
             timerGame.resetTimer();
        // }
 
-        System.out.println(timerGame.getTimer().getState());
-
         //timerGame.resetTimer();
         modelGame.setStateGame(StateGame.PLAYED);
         modelGame.init(firstPos);
     }
 
-    private void loadTableRecords(){
-        List<String[]> bestGamers = records.readRecordsFromFile();
-        System.out.println(bestGamers);
-
-        if (!bestGamers.isEmpty()) {
-            for (String[] gamer : bestGamers) {
-                GameType type = GameType.valueOf(gamer[0]);
-                System.out.println(gamer[1] +" "+ gamer[2]);
-                switch (type) {
-                    case NOVICE -> highScoresWindow.setNoviceRecord(gamer[1], Integer.parseInt(gamer[2]));
-                    case MEDIUM -> highScoresWindow.setMediumRecord(gamer[1], Integer.parseInt(gamer[2]));
-                    case EXPERT -> highScoresWindow.setExpertRecord(gamer[1], Integer.parseInt(gamer[2]));
-                    default -> {
-                        return;
-                    }
-                }
-            }
-        }
-    }
+//    private void loadTableRecords(){
+//        List<String[]> bestGamers = records.readRecordsFromFile();
+//        System.out.println(bestGamers);
+//
+//        if (!bestGamers.isEmpty()) {
+//            for (String[] gamer : bestGamers) {
+//                GameType type = GameType.valueOf(gamer[0]);
+//                System.out.println(gamer[1] +" "+ gamer[2]);
+//                switch (type) {
+//                    case NOVICE -> highScoresWindow.setNoviceRecord(gamer[1], Integer.parseInt(gamer[2]));
+//                    case MEDIUM -> highScoresWindow.setMediumRecord(gamer[1], Integer.parseInt(gamer[2]));
+//                    case EXPERT -> highScoresWindow.setExpertRecord(gamer[1], Integer.parseInt(gamer[2]));
+//                    default -> {
+//                        return;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
 
