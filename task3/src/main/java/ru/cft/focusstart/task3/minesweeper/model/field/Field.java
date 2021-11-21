@@ -10,24 +10,27 @@ public class Field {
     private final Cell[][] fieldGame;
 
     public Field() {
-        this.fieldGame = new Cell[SettingsField.getHeight()][SettingsField.getWeight()]; // create field
+        this.fieldGame = new Cell[SettingsField.getHeight()][SettingsField.getWeight()];
 
         for (Position position : SettingsField.getListPositions()){
-            fieldGame[position.getY()][position.getX()] = new Cell(position); // заполнили знач-ми по умолч-ю
+            fieldGame[position.getY()][position.getX()] = new Cell(position);
         }
+
         log.info("Создано поле {} X {} с значениями по умолчанию", SettingsField.getWeight(), SettingsField.getHeight());
     }
 
-    public Cell getCell(Position position){ //знач-е в ячейке
+    public Cell getCell(Position position){
         if (Field.isCellInField(position)){
             return fieldGame[position.getY()][position.getX()];
-            //return Optional.of(fieldGame[position.getX()][position.getY()]);
         }
-        //return Optional.empty();
-        return null;
+
+        Cell cell = new Cell(position);
+        cell.setStateCell(StateCell.OFF_THE_FIELD);
+        cell.setClosed(false);
+        return cell;
     }
 
-    public void setStateCell(Position position, StateCell state){ //в ячейку по передан-м коорд-м, установить перед-ое знач-е
+    public void setStateCell(Position position, StateCell state){
         if (Field.isCellInField(position)){
             Cell cell = fieldGame[position.getY()][position.getX()];
             cell.setStateCell(state);
@@ -50,14 +53,14 @@ public class Field {
                 posNeighbor = new Position(x, y);
                 if (isCellInField(posNeighbor) && !posNeighbor.equals(position)){
                     positionsAroundList.add(posNeighbor);
-                    //log.info("Найдены соседи ячейки({},{}): коорд-ты({},{})",position.getX(), position.getY(), posNeighbor.getX(), posNeighbor.getY());
+                    log.info("Найдены соседи ячейки({},{}): коорд-ты({},{})",position.getX(), position.getY(), posNeighbor.getX(), posNeighbor.getY());
                 }
             }
         }
         return positionsAroundList;
     }
 
-    public static boolean isCellInField(Position position){ //проверка на выход за пределы массива
+    public static boolean isCellInField(Position position){
         return (position.getX() >= 0 && position.getX() < SettingsField.getWeight()) &&
                 (position.getY() >= 0 && position.getY() < SettingsField.getHeight());
     }

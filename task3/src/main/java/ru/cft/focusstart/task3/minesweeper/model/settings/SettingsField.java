@@ -45,6 +45,7 @@ public class SettingsField {
                 height = ParamField.EXPERT.getHeight();
             }
         }
+
         generateListPositions(weight, height);
         log.info("Определен тип игры: {}, размер поля: {} Х {}", gameType, weight, height);
     }

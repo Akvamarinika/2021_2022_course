@@ -29,8 +29,7 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Position){
-            Position position = (Position) obj;
+        if (obj instanceof Position position){
             return this.x == position.x && this.y == position.y;
         }
         return super.equals(obj);
@@ -39,5 +38,10 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(y, x);
+    }
+
+    @Override
+    public String toString() {
+        return " x=" + x + " y=" + y;
     }
 }

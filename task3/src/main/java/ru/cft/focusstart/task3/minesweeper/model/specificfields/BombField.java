@@ -12,7 +12,7 @@ import java.util.Random;
 @Slf4j
 public class BombField{
     private static final Random random = new Random();
-    private Field bombsField = new Field();
+    private final Field bombsField = new Field();
     private final int countBombs;
     private int countClosedCells;
 
@@ -23,10 +23,10 @@ public class BombField{
 
 
     public void init(Position firstPos) {
-
         for (int i = 0; i < countBombs; i++){
             placeBombsOnField(firstPos);
         }
+
         log.info("Все бомбы были размещены на игровое поле...");
     }
 
@@ -53,9 +53,10 @@ public class BombField{
 
         while (true){
             Position position = getRandomPosition();
-            if (StateCell.BOMB == getStateCell(position) || (position.equals(firstPos))){ //если на данной координате уже установлена бомба, то пропустить
+            if (StateCell.BOMB == getStateCell(position) || (position.equals(firstPos))){
                 continue;
             }
+
             bombsField.setStateCell(position, StateCell.BOMB);
             increaseNumbersAroundBombs(position);
             break;
@@ -69,7 +70,7 @@ public class BombField{
     private void increaseNumbersAroundBombs(Position position){
         for (Position posNeighbor : Field.calcPositionsNeighbors(position)){
             Cell neighbor = bombsField.getCell(posNeighbor);
-            if (StateCell.BOMB != neighbor.getStateCell()){ // если пробегая вокруг ячейки, не нашли бомб, -> "next number"
+            if (StateCell.BOMB != neighbor.getStateCell()){
                 StateCell neighborNewState = bombsField.getStateCell(posNeighbor).getNextNumber();
                 bombsField.setStateCell(posNeighbor, neighborNewState);
             }
@@ -78,38 +79,42 @@ public class BombField{
 
     public Optional<Cell> openCell(Position position){
         Cell cell = bombsField.getCell(position);
-        if (cell.isClosed() && cell.getStateCell() != StateCell.BOMB) {  ////**************
+
+        if (cell.isClosed()) {
             cell.setClosed(false);
-            subtractAnOpenCell();
+            countClosedCells--;
             return Optional.of(cell);
         }
+
         return Optional.empty();
     }
 
-    public void subtractAnOpenCell(){
-        countClosedCells--;
-    }
-
-    public Cell openBombThatExploded(Position position) {//устанавливаем открытую клетку, на закрытой бомбе
+    public Cell openBombThatExploded(Position position) {
         Cell cell = bombsField.getCell(position);
         cell.setClosed(false);
         return cell;
     }
 
-    public Optional<Cell> setStateNobombWhenFlagIsWrong(Position position) {//если стоит флажок, а бомбы нет
+    public Optional<Cell> setStateNobombWhenFlagIsWrong(Position position) {
         Cell cell = bombsField.getCell(position);
+
         if (cell.isFlagged()){
             cell.setStateCell(StateCell.NO_BOMB);
             return Optional.of(cell);
         }
+
         return Optional.empty();
     }
 
-        public int calcNumberOfFlagsAroundCell(Position position){
+    public int calcNumberOfFlagsAroundCell(Position position){
         int countFlags = 0;
-        for (Position posNeighbor : Field.calcPositionsNeighbors(position))
-            if (bombsField.getCell(posNeighbor).isFlagged())
+
+        for (Position posNeighbor : Field.calcPositionsNeighbors(position)){
+            if (bombsField.getCell(posNeighbor).isFlagged()){
                 countFlags++;
+            }
+        }
+
         return countFlags;
     }
 }
