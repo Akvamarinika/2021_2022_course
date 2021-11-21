@@ -2,8 +2,6 @@ package ru.cft.focusstart.task3.minesweeper.model.field;
 
 public enum StateCell {
     OFF_THE_FIELD,
-    CLOSED,
-    MARKED,
     EMPTY(0),
     NUM_1(1),
     NUM_2(2),
@@ -30,7 +28,7 @@ public enum StateCell {
         return valueCell;
     }
 
-    public StateCell getNextState(){
+    public StateCell getNextNumber(){
        return switch (this) {
             case EMPTY -> NUM_1;
             case NUM_1 -> NUM_2;

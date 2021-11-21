@@ -26,6 +26,7 @@ public class ModelGame implements IGame{
 
     public void init(Position firstPos) {
         bombField.init(firstPos);
+        //stateGame = StateGame.PLAYED;
     }
 
     public StateGame getStateGame() {
@@ -58,41 +59,51 @@ public class ModelGame implements IGame{
 
         cell.setFlagged(true);
         countFlags++;
+        log.info("Flags: {}", cell);
         return Optional.of(cell);
     }
 
     @Override
-    public boolean isWin() { // кол-во закрытых клеток == кол-ву бомб
+    public boolean isWin() { // если играем && кол-во закрытых клеток == кол-ву бомб
         if ((stateGame == StateGame.PLAYED) && (bombField.getCountBombs() == bombField.getCountClosedCells())){
             stateGame = StateGame.WINED;
             return true;
         }
+        log.info("closed cells: {}", bombField.getCountClosedCells());
         return false;
     }
 
-    public void openCells(Position position) {  //***********
+    public void openCells(Position position) {  //**********************
         Cell cell = bombField.getCell(position);
         if (cell.isFlagged() || !cell.isClosed()){
             return;
         }
 
-            switch (cell.getStateCell()) {
-                case EMPTY -> openCellEmptyNeighbors(position);
-               // case BOMB -> openBombs(position);
-                default -> openCell(position);
-            }
+        switch (cell.getStateCell()) {
+            case EMPTY -> openCellEmptyNeighbors(position);
+            //case BOMB -> openBombs(position);
+            default -> openCell(position);
+        }
+
+
     }
 
     public void openCellsIfNumberOfCellEqualsCountFlags(Position position) {
         Cell cell = bombField.getCell(position);
+
         int countFlags = bombField.calcNumberOfFlagsAroundCell(position);
         if ((bombField.getStateCell(position) != StateCell.BOMB) && (countFlags == bombField.getStateCell(position).getValueCell()) && !cell.isClosed()) {
+            cellList.add(cell);
+            log.info("CellEqualsCountFlags: {}", cell);
+
             for (Position posNeighbor : Field.calcPositionsNeighbors(position)){
                 //if (bombField.getCell(posNeighbor).isClosed() && (bombField.getStateCell(posNeighbor) != StateCell.BOMB)) {
                 //if (!bombField.getCell(posNeighbor).isFlagged()) {
-                    openCells(posNeighbor);
-                    cellList.add(cell);
-               // }
+                openCells(posNeighbor);
+
+
+                //bombField.subtractAnOpenCell();
+                // }
                 //}
             }
         }
@@ -101,13 +112,23 @@ public class ModelGame implements IGame{
     private void openCellEmptyNeighbors(Position position) {
         Optional<Cell> cell = bombField.openCell(position);
         cell.ifPresent(cellList::add);
+        log.info("Self EmptyNeighbors: {}", cell);
+        //bombField.subtractAnOpenCell();
 
         for (Position posNeighbor : Field.calcPositionsNeighbors(position)) { // открыть пустых соседей клетки
             Cell neighbor = bombField.getCell(posNeighbor);
+            if (neighbor.isFlagged()){
+                neighbor.setFlagged(false);
+                countFlags--;
+                //bombField.subtractAnOpenCell();
+            }
             cellList.add(neighbor);
+
+            log.info("openCellEmptyNeighbors neighbor: {}", neighbor);///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
             openCells(posNeighbor);
         }
-        //log.info("Пустые соседи ячейки({},{}) были открыты", position.getX(), position.getY());
     }
 
 
@@ -117,15 +138,14 @@ public class ModelGame implements IGame{
         Cell bomb = bombField.getCell(posBomb);
         bomb.setStateCell(StateCell.BOMBED);
         cellList.add(bomb);
-        log.info("Похоже игрок открыл бомбу...((");
+        //flagField.setBombedToBox(posBomb);
 
         for (Position position : SettingsField.getListPositions()) {
             StateCell stateCell = bombField.getStateCell(position);
 
             if (stateCell == StateCell.BOMB) { // в какой-то ячейке есть бомба
-                Cell cell = bombField.openBombThatExploded(position);
+                Cell cell = bombField.openBombThatExploded(position); //устанавливаем открытую ячейку, на закрытой бомбе
                 cellList.add(cell);
-               // log.info("Список координат бомб для View был сформирован.");
             } else {
                 Optional<Cell> cell = bombField.setStateNobombWhenFlagIsWrong(position); //если стоит флажок, а бомбы нет
                 cell.ifPresent(cellList::add);
@@ -135,14 +155,18 @@ public class ModelGame implements IGame{
 
 
     public void openCell(Position position){
-        Optional<Cell> cell = bombField.openCell(position);
-        cell.ifPresent(cellList::add);
+        Optional<Cell> cellOpt = bombField.openCell(position);
+        if (cellOpt.isPresent()){
+            cellList.add(cellOpt.get());
+            log.info("OpenCell: {}", cellOpt.get());
+            //bombField.subtractAnOpenCell();
+        }
+        //cell.ifPresent(cellList::add);
     }
 
     @Override
     public boolean isGameOver() {
-        return (stateGame != StateGame.PLAYED) && (stateGame != null);
+        return (stateGame != StateGame.PLAYED) && (stateGame != null) && (stateGame != StateGame.WINED);
+        //start();
     }
-
-
 }

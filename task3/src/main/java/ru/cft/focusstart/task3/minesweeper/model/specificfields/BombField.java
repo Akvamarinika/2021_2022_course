@@ -56,7 +56,6 @@ public class BombField{
             if (StateCell.BOMB == getStateCell(position) || (position.equals(firstPos))){ //если на данной координате уже установлена бомба, то пропустить
                 continue;
             }
-            log.info("Бомбы: ({},{})",position.getY(),position.getX());
             bombsField.setStateCell(position, StateCell.BOMB);
             increaseNumbersAroundBombs(position);
             break;
@@ -71,7 +70,7 @@ public class BombField{
         for (Position posNeighbor : Field.calcPositionsNeighbors(position)){
             Cell neighbor = bombsField.getCell(posNeighbor);
             if (StateCell.BOMB != neighbor.getStateCell()){ // если пробегая вокруг ячейки, не нашли бомб, -> "next number"
-                StateCell neighborNewState = bombsField.getStateCell(posNeighbor).getNextState();
+                StateCell neighborNewState = bombsField.getStateCell(posNeighbor).getNextNumber();
                 bombsField.setStateCell(posNeighbor, neighborNewState);
             }
         }
@@ -81,10 +80,14 @@ public class BombField{
         Cell cell = bombsField.getCell(position);
         if (cell.isClosed() && cell.getStateCell() != StateCell.BOMB) {  ////**************
             cell.setClosed(false);
-            countClosedCells--;
+            subtractAnOpenCell();
             return Optional.of(cell);
         }
         return Optional.empty();
+    }
+
+    public void subtractAnOpenCell(){
+        countClosedCells--;
     }
 
     public Cell openBombThatExploded(Position position) {//устанавливаем открытую клетку, на закрытой бомбе
