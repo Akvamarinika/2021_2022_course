@@ -2,6 +2,12 @@ plugins {
     id 'java'
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(14)
+    }
+}
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -9,8 +15,12 @@ repositories {
     mavenCentral()
 }
 
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
 tasks.withType(JavaCompile) {
     options.compilerArgs += "--enable-preview"
+    options.encoding = 'UTF-8'
 }
 tasks.withType(Test) {
     jvmArgs += "--enable-preview"
@@ -27,9 +37,12 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
 
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
 }
