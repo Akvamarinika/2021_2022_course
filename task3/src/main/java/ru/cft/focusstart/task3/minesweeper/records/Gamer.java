@@ -1,6 +1,5 @@
 package ru.cft.focusstart.task3.minesweeper.records;
 
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

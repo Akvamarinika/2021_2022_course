@@ -129,7 +129,7 @@ public class ControllerGame {
     private void loadTableRecords(){
         records.readRecordsFromFile();
         List<Gamer> bestGamers = records.getBestGamers();
-
+        log.info("read records: {}", bestGamers);
         //if (bestGamers != null) {
             for (Gamer gamer : bestGamers){
 

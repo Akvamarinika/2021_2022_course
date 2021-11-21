@@ -2,33 +2,37 @@ package ru.cft.focusstart.task3.minesweeper.records;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.cft.focusstart.task3.minesweeper.view.GameType;
-import ru.cft.focusstart.task3.minesweeper.view.HighScoresWindow;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.*;
 
 @Slf4j
 @Getter
 public class Records {
     private List<Gamer> bestGamers = new ArrayList<>(3);
-    private File file = new File( "records.txt");
+    private File file;
     private Gson gson;
 
 //    KeyGenerator keyGenerator;
 //    SecretKey desKey;
 //    Cipher desCipher;
 
-    public Records()  {
+    public Records(){
+        //file = new File( Objects.requireNonNull(getClass().getClassLoader().getResource("records.txt")).getPath());
         gson = new GsonBuilder()
                 .setLenient()
                 .create();
 //        keyGenerator = KeyGenerator.getInstance("DES");
 //        desKey = keyGenerator.generateKey();
+//        URL resource = Records.class.getResource("records.txt");
+//        Paths.get(resource.toURI()).toFile();
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        String path = Objects.requireNonNull(classLoader.getResource("files/records.txt")).getPath();
+        file = new File(path);
 
     }
 
@@ -191,6 +195,7 @@ public class Records {
             while((line = reader.readLine()) != null){
                 //Gamer gamer = parseJsonFromFile(line);
                 //bestGamers.add(gamer);
+                System.out.println(line);
                 parseJsonFromFile(line);
             }
         }
@@ -201,8 +206,12 @@ public class Records {
 
     private void parseJsonFromFile(String jsonText){
         //Gson gson = new Gson();
-        Type listType = new TypeToken<List<Gamer>>() {}.getType();
-        bestGamers = gson.fromJson(jsonText, listType);
+//        Gamer gamer = gson.fromJson(jsonText, Gamer.class);
+//        System.out.println(gamer);
+        bestGamers = Arrays.asList(gson.fromJson(jsonText,
+                Gamer[].class));
+        //Type listType = new TypeToken<List<Gamer>>() {}.getType();
+        //bestGamers = gson.fromJson(jsonText, listType);
         log.info("parse json: {}",bestGamers);
         //Gamer gamer = gson.fromJson(jsonText, Gamer);
         //log.info("obj Gamer: {}", gamer);
