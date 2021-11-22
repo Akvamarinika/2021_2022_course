@@ -2,6 +2,11 @@ package ru.cft.focusstart.task2.figures;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.cft.focusstart.task2.figures.factory.exception.CreateFigureException;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
     /*отрицательные стороны не проверяются.
@@ -12,7 +17,8 @@ class TriangleTest {
 
     @BeforeEach
     void setUp() {
-        triangle = new Triangle(3, 4.5, 7);
+        List<Double> params = Arrays.asList(3., 4.5, 7.);
+        triangle = new Triangle(params);
     }
 
 
@@ -41,4 +47,13 @@ class TriangleTest {
         assertEquals(137.01, triangle.calcAngleGamma());
     }
 
+    @Test
+    void triangle_whenNoCorrectTriangleOneSideMoreThanSumOfTwo_throwCreateFigureException() {
+        List<Double> paramsFigure =  Arrays.asList(35., 5., 2.);
+        assertThrows(CreateFigureException.class, () -> new Triangle(paramsFigure));
+
+        assertThrows(CreateFigureException.class, () -> new Triangle(Arrays.asList(35., 65., 2.)));
+
+        assertThrows(CreateFigureException.class, () -> new Triangle(Arrays.asList(35., 5., 102.)));
+    }
 }

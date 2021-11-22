@@ -3,7 +3,7 @@ package ru.cft.focusstart.task2.figures.factory.exception;
 import lombok.Getter;
 
 @Getter
-public class CreateFigureException extends Exception{
+public class CreateFigureException extends RuntimeException{
     private final String figureName;
     private final String figureParams;
 

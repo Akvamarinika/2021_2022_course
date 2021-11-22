@@ -1,2 +1,0 @@
-Triangle
-5 6 ff 6

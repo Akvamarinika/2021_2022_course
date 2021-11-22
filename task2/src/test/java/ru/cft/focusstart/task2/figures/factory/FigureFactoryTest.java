@@ -5,9 +5,9 @@ import ru.cft.focusstart.task2.figures.Circle;
 import ru.cft.focusstart.task2.figures.Figure;
 import ru.cft.focusstart.task2.figures.Rectangle;
 import ru.cft.focusstart.task2.figures.Triangle;
-import ru.cft.focusstart.task2.figures.enum_figures.Figures;
+import ru.cft.focusstart.task2.figures.enumfigures.Figures;
 import ru.cft.focusstart.task2.figures.factory.exception.CreateFigureException;
-import ru.cft.focusstart.task2.parser_file.dto.DataFigure;
+import ru.cft.focusstart.task2.parserfile.dto.DataFigure;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +20,7 @@ class FigureFactoryTest {
     void createFigure_whenCorrectCircle_returnCircle() throws CreateFigureException {
         DataFigure dataFigure = new DataFigure(Figures.CIRCLE, Collections.singletonList(5.));
         Figure figure = FigureFactory.createFigure(dataFigure);
-        Figure expectedFigure = new Circle(5);
+        Figure expectedFigure = new Circle(Collections.singletonList(5.));
 
         assertEquals(expectedFigure, figure);
     }
@@ -29,7 +29,7 @@ class FigureFactoryTest {
     void createFigure_whenCorrectRectangle_returnRectangle() throws CreateFigureException {
         DataFigure dataFigure = new DataFigure(Figures.RECTANGLE, Arrays.asList(10., 5.));
         Figure figure = FigureFactory.createFigure(dataFigure);
-        Figure expectedFigure = new Rectangle(5, 10);
+        Figure expectedFigure = new Rectangle(Arrays.asList(5., 10.));
 
         assertEquals(expectedFigure, figure);
     }
@@ -38,7 +38,7 @@ class FigureFactoryTest {
     void createFigure_whenCorrectTriangle_returnTriangle() throws CreateFigureException {
         DataFigure dataFigure = new DataFigure(Figures.TRIANGLE, Arrays.asList(12., 5., 10.));
         Figure figure = FigureFactory.createFigure(dataFigure);
-        Figure expectedFigure = new Triangle(5., 10., 12.);
+        Figure expectedFigure = new Triangle(Arrays.asList(5., 10., 12.));
 
         assertEquals(expectedFigure, figure);
     }

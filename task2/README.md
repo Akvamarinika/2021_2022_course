@@ -22,10 +22,12 @@ java -jar task2.jar -i in.txt -f out.txt (вывод в файл);
 
 * Используется annotation Processor: lombok ver. 1.18.20
 * Все виды ошибок выводятся в log-консоль.
-* Java ver. 12 12.0.02
+* Java ver. 14 
 * slf4j-api, ver. 1.7.32
 * logback-classic, ver. 1.2.3
-* commons-cli, ver. 1.4
+* commons-cli, ver. 1.5
+* файл в ресурсах "forDev.txt" для теста приложения, 
+приложение может принимать любые другие файлы кодировки utf-8
 
 При некорректной кодировке добавить в VM Options: 
 -Dfile.encoding=UTF-8
