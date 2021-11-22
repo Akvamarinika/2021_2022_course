@@ -10,26 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FigureValidatorTest {
 
-
-//    @Test
-//    void isCircle_whenParamCircleEqualsOne_returnTrue() {
-//        DataFigure dataFigure = new DataFigure(Figures.CIRCLE, Collections.singletonList(5.));
-//        boolean result = FigureValidator.isCircle(dataFigure);
-//
-//        assertTrue(result);
-//    }
-//
-//    @Test
-//    void isCircle_whenParamCircleNotOne_returnFalse() {
-//        DataFigure dataFigure = new DataFigure(Figures.CIRCLE, Arrays.asList(10., 5.));
-//        boolean result = FigureValidator.isCircle(dataFigure);
-//        assertFalse(result);
-//
-//        dataFigure = new DataFigure(Figures.CIRCLE, Arrays.asList(10., 5., 7.));
-//        result = FigureValidator.isCircle(dataFigure);
-//        assertFalse(result);
-//    }
-
     @Test
     void isFigure_whenTypeCircle_returnTrue() {
         boolean result = FigureValidator.isFigure(Figures.CIRCLE.name());

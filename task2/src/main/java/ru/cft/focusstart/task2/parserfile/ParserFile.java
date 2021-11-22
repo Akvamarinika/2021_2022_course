@@ -28,7 +28,7 @@ public class ParserFile implements ParsingFiles{
 
                 if (typeOfFigure == Figures.UNKNOWN){
                     typeOfFigure = parseTypeFigure(line);
-                } else if (paramsFigure.isEmpty()){     //|| !FigureValidator.isMatchCountParamsFigureType(typeOfFigure, paramsFigure)
+                } else if (paramsFigure.isEmpty()){
                     paramsFigure = parseParamsFigure(line);
                 }
             }
