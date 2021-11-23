@@ -9,7 +9,7 @@
     </appender>
 
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>logs/task3.log</file>
+        <file>logs/task4.log</file>
         <encoder>
             <charset>UTF-8</charset>
                 <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
