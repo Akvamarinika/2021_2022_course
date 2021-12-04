@@ -2,7 +2,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Consumer implements Runnable{
-    private int consumerTime;
+    private final int consumerTime;
     private final Storage storage;
 
     public Consumer(int consumerTime, Storage storage) {
@@ -18,7 +18,7 @@ public class Consumer implements Runnable{
                 storage.buyResource();
             }
         } catch (InterruptedException ex) {
-            log.info("Поток Consumer {} был прерван", Thread.currentThread());
+            Thread.currentThread().interrupt();
         }
     }
 }

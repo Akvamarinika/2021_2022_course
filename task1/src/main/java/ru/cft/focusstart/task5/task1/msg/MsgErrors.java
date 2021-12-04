@@ -1,4 +1,4 @@
-package ru.cft.focusstart.task1.msg;
+package ru.cft.focusstart.task5.task1.msg;
 
 public enum MsgErrors {
     MSG_ERR_SIZE_TABLE("Размер таблицы может быть от 1 до 32. Пожалуйста, введите число в данном диапазоне."),

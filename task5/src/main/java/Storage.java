@@ -12,40 +12,31 @@ public class Storage {
         this.storageSize = storageSize;
     }
 
-    public void buyResource(){
-        synchronized (resources) {
-            while (resources.size() == 0){
-                try {
-                    log.info("Перешел в режим ожидания...");
-                    resources.wait();
-                    log.info("Возобновил работу.");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+    public synchronized void buyResource() throws InterruptedException {
+        while (resources.size() == 0){
+            log.info("Перешел в режим ожидания...");
+
+            this.wait();
+            log.info("Возобновил работу.");
         }
-            int idResource = resources.iterator().next();
-            resources.remove(idResource);
-            log.info("Купил ресурс id=={}. Остаток на складе: {}", idResource, resources.size());
-            resources.notify();
-        }
+
+        int idResource = resources.iterator().next();
+        resources.remove(idResource);
+        log.info("Купил ресурс id=={}. Остаток на складе: {}", idResource, resources.size());
+        this.notify();
+
     }
 
-    public  void makeResource(){
-        synchronized (resources) {
-            while (resources.size() >= storageSize){
-                try {
-                    log.info("Перешел в режим ожидания...");
-                    resources.wait();
-                    log.info("Возобновил работу.");
+    public synchronized void makeResource() throws InterruptedException {
+        while (resources.size() >= storageSize){
+            log.info("Перешел в режим ожидания...");
+            this.wait();
+            log.info("Возобновил работу.");
+        }
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-                resources.add(idRes);
-                log.info("Произвел ресурс id=={}. В наличии на складе: {}", idRes, resources.size());
-                idRes++;
-                resources.notify();
-       }
+        resources.add(idRes);
+        log.info("Произвел ресурс id=={}. В наличии на складе: {}", idRes, resources.size());
+        idRes++;
+        this.notify();
     }
 }

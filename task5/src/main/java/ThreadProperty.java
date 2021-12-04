@@ -1,3 +1,4 @@
+import exeption.PropertyException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -6,31 +7,29 @@ import java.util.Properties;
 
 @Slf4j
 public class ThreadProperty {
-    private static final String FILE_NAME = "threads.properties";
+    private static final String PROPERTIES_FILE_NAME = "threads.properties";
     private static Properties prop;
 
     public static void loadProperties(){
         prop = new Properties();
-        try (InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(FILE_NAME)) {
+        try (InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME)) {
             if (inputStream == null) {
-                log.warn("Не удалось найти threads.properties");
+                log.warn("Не удалось найти {}", PROPERTIES_FILE_NAME);
                 return;
             }
 
             prop.load(inputStream);
 
         } catch (IOException ex) {
-            log.warn("Ошибка при чтении threads.properties");
+            log.warn("Ошибка при чтении {}", PROPERTIES_FILE_NAME);
         }
     }
 
     public static int getProperty(String propertyName){
         String strValue = prop.getProperty(propertyName);
-        int intValue;
 
         try {
-
-            intValue = Integer.parseInt(strValue);
+            int intValue = Integer.parseInt(strValue);
 
             if (intValue < 1){
                 intValue = 0;
@@ -40,10 +39,8 @@ public class ThreadProperty {
             return intValue;
 
         } catch (NumberFormatException ex) {
-            intValue = 0;
-            log.warn("Не удалось преобразовать свойство {} к числу. Установлено значение по умолчанию: 0", propertyName);
+            log.error("Не удалось преобразовать свойство {} к числу. Ошибка: {}", propertyName, ex.getMessage());
+            throw new PropertyException("Не удалось преобразовать к числу свойство: ", propertyName);
         }
-
-        return intValue;
     }
 }

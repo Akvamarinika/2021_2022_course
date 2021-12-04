@@ -1,4 +1,4 @@
-package ru.cft.focusstart.task1;
+package ru.cft.focusstart.task5.task1;
 
 public class TableMulti {
     public static final String VERTICAL_DELIMITER = "|";
