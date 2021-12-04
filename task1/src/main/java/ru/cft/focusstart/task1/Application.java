@@ -1,7 +1,6 @@
-package ru.cft.focusstart.task5.task1;
+package ru.cft.focusstart.task1;
 
-import ru.cft.focusstart.task5.task1.msg.MsgErrors;
-
+import ru.cft.focusstart.task1.msg.MsgErrors;
 import java.util.Scanner;
 
 public class Application {
