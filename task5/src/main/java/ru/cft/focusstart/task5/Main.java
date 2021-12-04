@@ -1,4 +1,6 @@
-import exeption.PropertyException;
+package ru.cft.focusstart.task5;
+
+import ru.cft.focusstart.task5.exeption.PropertyException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

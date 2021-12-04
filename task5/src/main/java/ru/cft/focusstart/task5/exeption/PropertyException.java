@@ -1,4 +1,4 @@
-package exeption;
+package ru.cft.focusstart.task5.exeption;
 
 public class PropertyException extends RuntimeException{
     String propertyName;

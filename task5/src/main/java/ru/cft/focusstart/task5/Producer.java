@@ -1,12 +1,14 @@
+package ru.cft.focusstart.task5;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Consumer implements Runnable{
-    private final int consumerTime;
+public class Producer implements Runnable{
+    private final int producerTime;
     private final Storage storage;
 
-    public Consumer(int consumerTime, Storage storage) {
-        this.consumerTime = consumerTime;
+    public Producer(int producerTime, Storage storage) {
+        this.producerTime = producerTime;
         this.storage = storage;
     }
 
@@ -14,9 +16,10 @@ public class Consumer implements Runnable{
     public void run() {
         try {
             while (true) {
-                Thread.sleep(consumerTime);
-                storage.buyResource();
+                Thread.sleep(producerTime);
+                storage.makeResource();
             }
+
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
