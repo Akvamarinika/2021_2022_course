@@ -1,4 +1,4 @@
-package ru.cft.focusstart.task3.minesweeper.view;
+package ru.cft.focusstart.task3.minesweeper.view.windows;
 
 import javax.swing.*;
 import java.awt.*;

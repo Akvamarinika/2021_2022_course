@@ -1,15 +1,15 @@
-package ru.cft.focusstart.task3.minesweeper.view;
+package ru.cft.focusstart.task3.minesweeper.view.windows;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class WinWindow extends JDialog {
+public class LoseWindow extends JDialog {
     private ActionListener newGameListener;
     private ActionListener exitListener;
 
-    public WinWindow(JFrame owner, ActionListener newGameListener, ActionListener exitListener) {
-        super(owner, "Win", true);
+    public LoseWindow(JFrame owner, ActionListener newGameListener, ActionListener exitListener) {
+        super(owner, "Lose", true);
 
         GridBagLayout layout = new GridBagLayout();
         Container contentPane = getContentPane();
@@ -39,7 +39,7 @@ public class WinWindow extends JDialog {
     }
 
     private JLabel createLoseLabel(GridBagLayout layout) {
-        JLabel label = new JLabel("You win!");
+        JLabel label = new JLabel("You lose!");
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;

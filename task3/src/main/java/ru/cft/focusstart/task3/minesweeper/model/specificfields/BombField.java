@@ -21,7 +21,6 @@ public class BombField{
         countClosedCells = SettingsField.getWeight() * SettingsField.getHeight();
     }
 
-
     public void init(Position firstPos) {
         for (int i = 0; i < countBombs; i++){
             placeBombsOnField(firstPos);
@@ -30,16 +29,13 @@ public class BombField{
         log.info("Все бомбы были размещены на игровое поле...");
     }
 
-
     public Cell getCell(Position position) {
         return bombsField.getCell(position);
     }
 
-
     public StateCell getStateCell(Position position) {
         return bombsField.getCell(position).getStateCell();
     }
-
 
     public int getCountBombs() {
             return countBombs;
@@ -69,7 +65,9 @@ public class BombField{
 
     private void increaseNumbersAroundBombs(Position position){
         for (Position posNeighbor : Field.calcPositionsNeighbors(position)){
+
             Cell neighbor = bombsField.getCell(posNeighbor);
+
             if (StateCell.BOMB != neighbor.getStateCell()){
                 StateCell neighborNewState = bombsField.getStateCell(posNeighbor).getNextNumber();
                 bombsField.setStateCell(posNeighbor, neighborNewState);

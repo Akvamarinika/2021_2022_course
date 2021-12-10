@@ -1,17 +1,17 @@
 package ru.cft.focusstart.task3.minesweeper.timer;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.cft.focusstart.task3.minesweeper.view.MainWindow;
+import ru.cft.focusstart.task3.minesweeper.view.View;
 
 @Slf4j
 public class TimerGame {
     private Thread timer;
     private int timeSec;
     private boolean isStop;
-    private MainWindow mainWindow;
+    private View view;
 
-    public void setMainWindow(MainWindow mainWindow){
-        this.mainWindow = mainWindow;
+    public void setView(View view){
+        this.view = view;
     }
 
     public Thread getTimer() {
@@ -28,7 +28,7 @@ public class TimerGame {
         timer = new Thread(() -> {
             while(!isStop) {
                 timeSec++;
-                mainWindow.setTimerValue(timeSec);
+                view.setTimerValue(timeSec);
 
                 try {
                     Thread.sleep(1000);
@@ -53,6 +53,6 @@ public class TimerGame {
 
     public void resetTimer(){
         timeSec = 0;
-        mainWindow.setTimerValue(timeSec);
+        view.setTimerValue(timeSec);
     }
 }

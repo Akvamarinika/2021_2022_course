@@ -1,15 +1,13 @@
-package ru.cft.focusstart.task3.minesweeper.view;
+package ru.cft.focusstart.task3.minesweeper.view.windows;
 
-import ru.cft.focusstart.task3.minesweeper.model.field.Cell;
-import ru.cft.focusstart.task3.minesweeper.model.field.Position;
-import ru.cft.focusstart.task3.minesweeper.model.settings.SettingsField;
+import ru.cft.focusstart.task3.minesweeper.view.ButtonType;
+import ru.cft.focusstart.task3.minesweeper.view.GameImage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 public class MainWindow extends JFrame {
     private final Container contentPane;
