@@ -8,6 +8,8 @@ import java.util.Properties;
 
 @Slf4j
 public class ThreadProperty {
+    public static final String FORMAT_ERROR = "Не удалось преобразовать к числу свойство: ";
+    public static final String PROPERTY_ERROR = "Ошибка: Значение свойства меньше или равно 0. ";
     private static final String PROPERTIES_FILE_NAME = "threads.properties";
     private static Properties prop;
 
@@ -33,15 +35,15 @@ public class ThreadProperty {
             int intValue = Integer.parseInt(strValue);
 
             if (intValue < 1){
-                intValue = 0;
-                log.warn("Значение свойства {} <= 0.", propertyName);
+                log.warn("Ошибка: Значение свойства {} меньше или равно 0.", propertyName);
+                throw new PropertyException(PROPERTY_ERROR, propertyName);
             }
 
             return intValue;
 
         } catch (NumberFormatException ex) {
-            log.error("Не удалось преобразовать свойство {} к числу. Ошибка: {}", propertyName, ex.getMessage());
-            throw new PropertyException("Не удалось преобразовать к числу свойство: ", propertyName);
+            log.warn("Не удалось преобразовать свойство {} к числу. Ошибка: {}", propertyName, ex.getMessage());
+            throw new PropertyException(FORMAT_ERROR, propertyName);
         }
     }
 }

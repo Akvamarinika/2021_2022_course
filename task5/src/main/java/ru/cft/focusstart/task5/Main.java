@@ -19,9 +19,9 @@ public class Main {
             createAndStartProducers(storage);
             createAndStartConsumers(storage);
         } catch (PropertyException ex) {
-            System.out.println(ex.getMessage() + ex.getPropertyName());
+            log.error("{} {}", ex.getMessage(), ex.getPropertyName());
         } catch (Exception ex){
-            log.error("Неизвестная ошибка в процессе выполнения программы: ", ex.getMessage());
+            log.error("Неизвестная ошибка в процессе выполнения программы: {}", ex.getMessage());
         }
     }
 
