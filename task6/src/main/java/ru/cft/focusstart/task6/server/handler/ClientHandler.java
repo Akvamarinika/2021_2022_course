@@ -1,7 +1,6 @@
 package ru.cft.focusstart.task6.server.handler;
 
 import ru.cft.focusstart.task6.server.handler.Handler;
-
 import java.net.Socket;
 import java.util.List;
 
@@ -13,17 +12,19 @@ public class ClientHandler implements Handler {
     }
 
     @Override
-    public boolean checkNicknameForRepeat() {
+    public boolean checkNicknameForRepeat(String nickName) {
         return false;
     }
 
     @Override
     public void sendMessageToAllClients(String message) {
-
+        for (Socket clientSocket : clientsSockets) {
+            sendMessage(message);
+        }
     }
 
     @Override
-    public void sendMsg(String message) {
+    public void sendMessage(String message) {
 
     }
 

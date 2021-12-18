@@ -1,7 +1,8 @@
 package ru.cft.focusstart.task6.server;
 
 import lombok.extern.slf4j.Slf4j;
-
+import ru.cft.focusstart.task6.server.handler.ClientHandler;
+import ru.cft.focusstart.task6.server.handler.Handler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class ChatServer implements Server{
+public class ChatServer implements Server, ModelServer {
     //private ServerSocket server;
     private final int port;
     private final List<Socket> clientsSockets;
@@ -22,7 +23,7 @@ public class ChatServer implements Server{
 
     @Override
     public void startServer() {
-        clientHandlerThread = new Thread();
+        clientHandlerThread = new Thread(this::handlerClients);
         clientHandlerThread.setDaemon(true);
 
         try(ServerSocket server = new ServerSocket(port)){
@@ -49,10 +50,27 @@ public class ChatServer implements Server{
 
             synchronized (this.clientsSockets){
                 copyClientsSockets = new ArrayList<>(clientsSockets);
+
+                Handler clientsHandler = new ClientHandler(copyClientsSockets);
             }
 
 
 
         }
+    }
+
+    @Override
+    public void nameRequest() {
+
+    }
+
+    @Override
+    public void getNameFromClient(String name) {
+
+    }
+
+    @Override
+    public void chatMessagesResponse() {
+
     }
 }

@@ -5,7 +5,7 @@ import ru.cft.focusstart.task6.client.controller.ListenerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainView implements View{
+public class MainView implements ViewSigner, ListenerModel{
     private final List<ListenerView> listeners = new ArrayList<>();
     private Window window;
 
@@ -13,7 +13,14 @@ public class MainView implements View{
 //    private NickNameWindow nickNameWindow;
 //    private ChatWindow chatWindow;
 
-    public MainView() {}
+    public MainView() {
+        notifyAboutPressConnectionBtn();
+
+        if (window != null){
+            window.visible();
+        }
+    }
+
 
 //    public void setConnectionWindow(ConnectionWindow connectionWindow) {
 //        this.connectionWindow = connectionWindow;
@@ -49,5 +56,24 @@ public class MainView implements View{
             }
 
         });
+    }
+
+    @Override
+    public void informAboutClientConnected() {
+        notifyAboutEnteredNickname();
+
+        if (window != null){
+            window.visible();
+        }
+    }
+
+    @Override
+    public void informThatNicknameIsAccepted() {
+
+    }
+
+    @Override
+    public void informAboutGetNewMessage() {
+
     }
 }

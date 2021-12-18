@@ -1,25 +1,31 @@
 package ru.cft.focusstart.task6.client;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.cft.focusstart.task6.client.controller.ClientController;
-import ru.cft.focusstart.task6.client.model.ModelClient;
+import ru.cft.focusstart.task6.client.exception.ConnectionException;
 import ru.cft.focusstart.task6.client.model.ChatClient;
-import ru.cft.focusstart.task6.client.view.ConnectionWindow;
 import ru.cft.focusstart.task6.client.view.MainView;
-import ru.cft.focusstart.task6.client.view.NickNameWindow;
-import ru.cft.focusstart.task6.client.view.View;
 
-
+@Slf4j
 public class Client {
     public static void main(String[] args) {
-        ModelClient modelClient = new ChatClient();
-        ClientController controller = new ClientController();
+        try {
+            ChatClient chatClient = new ChatClient();
 
-        View view = new MainView();
-        view.subscribe(controller);
+            ClientController controller = new ClientController();
+            controller.setModelClient(chatClient);
 
-        ConnectionWindow connectionWindow = new ConnectionWindow(controller::informAboutIntentionToConnect);
+            MainView view = new MainView();
+            view.subscribe(controller);
 
-        NickNameWindow nickNameWindow = new NickNameWindow(controller::informAboutEnteredNickname);
+            chatClient.subscribe(view);
+        } catch (ConnectionException e) {
+            log.error("Ошибка: {}", e.getMessage());
+        }
+
+//        ConnectionWindow connectionWindow = new ConnectionWindow(controller::informAboutIntentionToConnect);
+//
+//        NickNameWindow nickNameWindow = new NickNameWindow(controller::informAboutEnteredNickname);
 
 
         //connectionWindow.setConnectAction(e -> controller.informAboutIntentionToConnect("", ""));
