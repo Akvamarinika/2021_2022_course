@@ -8,10 +8,10 @@ import java.util.Set;
 
 public class ViewClient extends JFrame{
     private final Client client;
-    private final JTextArea messages = new JTextArea(30, 20);
-    private final JTextArea users = new JTextArea(30, 15);
+    private final JTextArea messages = new JTextArea(20, 20);
+    private final JTextArea users = new JTextArea(20, 15);
     private final JPanel panel = new JPanel();
-    private final JTextField textField = new JTextField(40);
+    private final JTextField textField = new JTextField(35);
     private final JButton buttonDisable = new JButton("Отключиться");
     private final JButton buttonConnect = new JButton("Подключиться");
     private final JButton buttonSendMessage = new JButton("Отправить");

@@ -27,5 +27,31 @@ dependencies {
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-
 }
+
+jar {
+    jar.archiveFileName = "task6server.jar"
+    manifest {
+        attributes (
+                "Main-Class": "ru.cft.focusstart.task6.MainServer"
+        )
+    }
+    zip64 = true
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
+
+jar {
+    jar.archiveFileName = "task6client.jar"
+    manifest {
+        attributes (
+                "Main-Class": "ru.cft.focusstart.task6.MainClient"
+        )
+    }
+    zip64 = true
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
+
