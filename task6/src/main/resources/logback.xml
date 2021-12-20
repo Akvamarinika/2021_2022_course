@@ -23,7 +23,7 @@
         <appender-ref ref="file"/>
     </root>
 
-    <logger name="ru.cft.focusstart.task3.minesweeper" level="INFO" />
+    <logger name="ru.cft.focusstart.task6" level="DEBUG" />
 
 
 </configuration>

@@ -2,7 +2,7 @@ package ru.cft.focusstart.task6.client;
 
 import javax.swing.*;
 
-public enum ChatImage {
+public enum ImageChat {
     ICON_APP("icon.png"),
     ICON_FALSE("false.png"),
     ICON_TRUE("true.png"),
@@ -11,7 +11,7 @@ public enum ChatImage {
     private final String fileName;
     private ImageIcon imageIcon;
 
-    ChatImage(String fileName) {
+    ImageChat(String fileName) {
         this.fileName = fileName;
     }
 
