@@ -74,8 +74,8 @@ public class Client {
                 }
 
             } catch (IOException | ClassNotFoundException ex) {
-                log.warn("Ошибка при регестрации ника, {}", ex.getMessage());
-                viewClient.errorDialogWindow("Ошибка при регестрации ника. Попробуйте переподключиться");
+                log.warn("Ошибка при регистрации ника, {}", ex.getMessage());
+                viewClient.errorDialogWindow("Ошибка при регистрации ника. Попробуйте переподключиться");
                 try {
                     connection.close();
                     isConnect = false;
