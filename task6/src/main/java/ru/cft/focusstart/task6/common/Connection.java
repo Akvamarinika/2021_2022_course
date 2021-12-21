@@ -1,7 +1,6 @@
 package ru.cft.focusstart.task6.common;
 
 import ru.cft.focusstart.task6.common.dto.Message;
-
 import java.io.*;
 import java.net.Socket;
 

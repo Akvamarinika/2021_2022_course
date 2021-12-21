@@ -3,7 +3,6 @@ package ru.cft.focusstart.task6.server.property;
 import com.sun.tools.javac.Main;
 import lombok.extern.slf4j.Slf4j;
 import ru.cft.focusstart.task6.server.exeption.PropertyException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;

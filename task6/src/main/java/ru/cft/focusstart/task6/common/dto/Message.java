@@ -2,10 +2,7 @@ package ru.cft.focusstart.task6.common.dto;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.cft.focusstart.task6.common.MessageType;
-
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Slf4j

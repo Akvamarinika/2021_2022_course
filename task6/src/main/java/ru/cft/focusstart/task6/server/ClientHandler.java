@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import ru.cft.focusstart.task6.common.Connection;
 import ru.cft.focusstart.task6.common.MessageType;
 import ru.cft.focusstart.task6.common.dto.Message;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.HashSet;
