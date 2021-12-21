@@ -1,5 +1,7 @@
 package ru.cft.focusstart.task6.client;
 
+import ru.cft.focusstart.task6.client.enumservice.TextDialogWindow;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -72,7 +74,7 @@ public class ViewClient extends JFrame{
                 client.sendMessageOnServerForOtherUsers(textField.getText());
                 textField.setText("");
             } else {
-                errorDialogWindow("Вы не подключены к чату. Нажмите кнопку Подключиться");
+                errorDialogWindow(TextDialogWindow.NO_CONNECTED_ERROR.toString());
             }
         });
 
@@ -81,7 +83,7 @@ public class ViewClient extends JFrame{
                 client.sendMessageOnServerForOtherUsers(textField.getText());
                 textField.setText("");
             } else {
-                errorDialogWindow("Вы не подключены к чату. Нажмите кнопку Подключиться");
+                errorDialogWindow(TextDialogWindow.NO_CONNECTED_ERROR.toString());
             }
         });
     }

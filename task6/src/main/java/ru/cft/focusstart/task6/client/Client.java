@@ -1,6 +1,8 @@
 package ru.cft.focusstart.task6.client;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.cft.focusstart.task6.client.enumservice.ServiceMessage;
+import ru.cft.focusstart.task6.client.enumservice.TextDialogWindow;
 import ru.cft.focusstart.task6.common.Connection;
 import ru.cft.focusstart.task6.common.MessageType;
 import ru.cft.focusstart.task6.common.dto.Message;
@@ -16,6 +18,7 @@ public class Client {
     private static ModelConnectedUsers model;
     private static ViewClient viewClient;
     private volatile boolean isConnect = false;
+    private static final String DATE_TIME_PATTERN = "dd.MM.yyyy HH:mm:ss";
     private String yourNickname;
 
     public boolean isConnect() {
@@ -37,15 +40,15 @@ public class Client {
                     Socket socket = new Socket(addressServer, port);
                     connection = new Connection(socket);
                     isConnect = true;
-                    viewClient.addMessage("SERVER: Вы подключились к серверу.\n");
+                    viewClient.addMessage(ServiceMessage.CONNECTION_MSG.toString());
                     break;
                 } catch (IOException ex) {
                     log.error("Ошибка при подкючении Клиента: введен неверный адрес или порт");
-                    viewClient.errorDialogWindow("Ошибка при подкючении. Возможно, Вы ввели не верный хост или порт. Попробуйте еще раз");
+                    viewClient.errorDialogWindow(TextDialogWindow.HOST_PORT_INPUT_ERROR.toString());
                     break;
                 }
             }
-        } else viewClient.errorDialogWindow("Вы уже подключены к серверу!");
+        } else viewClient.errorDialogWindow(TextDialogWindow.WHEN_ALREADY_CONNECTED_ERROR.toString());
     }
 
     //регистрация со стороны клиента
@@ -63,26 +66,26 @@ public class Client {
 
                 if (message.getType() == MessageType.NICKNAME_ACCEPTED) {
                     log.info("Был зарегистрирован никнейм в чате");
-                    viewClient.addMessage("SERVER: ваш никнейм принят!\n");
+                    viewClient.addMessage(ServiceMessage.NICKNAME_ACCEPTED.toString());
                     model.setConnectedUsers(message.getConnectionUsers());
                     break;
                 }
 
                 if (message.getType() == MessageType.USED_NICKNAME) {
                     log.info("Введен никнейм {}, который уже есть в чате", message.getType());
-                    viewClient.errorDialogWindow("Данный никнейм уже занят. Пожалуйста, введите другой ник");
+                    viewClient.errorDialogWindow(TextDialogWindow.USED_NICKNAME_ERROR.toString());
                 }
 
             } catch (IOException | ClassNotFoundException ex) {
                 log.warn("Ошибка при регистрации ника, {}", ex.getMessage());
-                viewClient.errorDialogWindow("Ошибка при регистрации ника. Попробуйте переподключиться");
+                viewClient.errorDialogWindow(TextDialogWindow.REGISTRATION_ERROR.toString());
                 try {
                     connection.close();
                     isConnect = false;
                     break;
                 } catch (IOException e) {
                     log.error("Не удалось закрыть соединение, {}", e.getMessage());
-                    viewClient.errorDialogWindow("Произошла ошибка при закрытии соединения");
+                    viewClient.errorDialogWindow(TextDialogWindow.CLOSE_CONNECTION_ERROR.toString());
                 }
             }
 
@@ -95,13 +98,12 @@ public class Client {
             String textWithDateTimeStamp = String.format("%s %s", dateTime, text);
             connection.sendMessage(new Message(MessageType.TEXT_MESSAGE, textWithDateTimeStamp));
         } catch (IOException ex) {
-            viewClient.errorDialogWindow("Ошибка при отправке сообщения на сервер");
+            viewClient.errorDialogWindow(TextDialogWindow.SEND_MSG_ERROR.toString());
         }
     }
 
     private String createDateTimeNowFormatted(){
         LocalDateTime dateTime = LocalDateTime.now();
-        String DATE_TIME_PATTERN = "dd.MM.yyyy HH:mm:ss";
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
         log.debug("Format DateTime: {}", dateFormatter.format(dateTime));
         return " [" + dateFormatter.format(dateTime) + "]: ";
@@ -119,21 +121,21 @@ public class Client {
                 }
 
                 if (message.getType() == MessageType.ADDED_USER) {
-                    log.info("В чат вошел новый пользователь");
                     model.addUser(message.getText());
                     viewClient.updateConnectedUsers(model.getConnectedUsers());
-                    viewClient.addMessage(String.format("SERVER: новый пользователь %s присоединился к чату.\n", message.getText()));
+                    viewClient.addMessage(String.format(ServiceMessage.NEW_USER_ADDED.toString(), message.getText()));
+                    log.info("В чат вошел новый пользователь {}", message.getText());
                 }
 
                 if (message.getType() == MessageType.REMOVED_USER) {
-                    log.info("Из чата вышел пользователь");
                     model.removeUser(message.getText());
                     viewClient.updateConnectedUsers(model.getConnectedUsers());
-                    viewClient.addMessage(String.format("SERVER: пользователь %s покинул чат.\n", message.getText()));
+                    viewClient.addMessage(String.format(ServiceMessage.USER_DISCONNECTED.toString(), message.getText()));
+                    log.info("Из чата вышел пользователь {}", message.getText());
                 }
             } catch (IOException | ClassNotFoundException ex) {
                 log.warn("Пользователь не смог принять сообщение от сервера");
-                viewClient.errorDialogWindow("Ошибка при приеме сообщения от сервера.");
+                viewClient.errorDialogWindow(TextDialogWindow.RECEIVE_MSG_ERROR.toString());
                 setConnect(false);
                 viewClient.updateConnectedUsers(model.getConnectedUsers());
                 break;
@@ -148,10 +150,10 @@ public class Client {
                 model.getConnectedUsers().clear();
                 isConnect = false;
                 viewClient.updateConnectedUsers(model.getConnectedUsers());
-            } else viewClient.errorDialogWindow("Вы уже отключены!");
+            } else viewClient.errorDialogWindow(TextDialogWindow.WHEN_ALREADY_DISCONNECTED_ERROR.toString());
         } catch (IOException ex) {
             log.error("Ошибка при отключении от сервера, {}", ex.getMessage());
-            viewClient.errorDialogWindow("SERVER: произошла ошибка при отключении.");
+            viewClient.errorDialogWindow(TextDialogWindow.DISCONNECTED_ERROR.toString());
         }
     }
 
