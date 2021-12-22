@@ -71,8 +71,14 @@ public class ViewClient extends JFrame{
 
         textField.addActionListener(e -> {
             if (client.isConnect()) {
-                client.sendMessageOnServerForOtherUsers(textField.getText());
-                textField.setText("");
+
+                if (!textField.getText().isEmpty()) {
+                    client.sendMessageOnServerForOtherUsers(textField.getText());
+                    textField.setText("");
+                } else {
+                    errorDialogWindow(TextDialogWindow.EMPTY_MSG_ERROR.toString());
+                }
+
             } else {
                 errorDialogWindow(TextDialogWindow.NO_CONNECTED_ERROR.toString());
             }

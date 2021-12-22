@@ -10,7 +10,8 @@ public enum TextDialogWindow {
     RECEIVE_MSG_ERROR("Ошибка при приеме сообщения от сервера."),
     WHEN_ALREADY_DISCONNECTED_ERROR("Вы уже отключены!"),
     DISCONNECTED_ERROR("Произошла ошибка при отключении от чата."),
-    NO_CONNECTED_ERROR("Вы не подключены к чату. Нажмите кнопку Подключиться")
+    NO_CONNECTED_ERROR("Вы не подключены к чату. Нажмите кнопку Подключиться"),
+    EMPTY_MSG_ERROR("Вы пытаетесь отправить пустое сообщение. Пожалуйста, введите какой-нибудь текст.")
     ;
 
     private final String dialogMsg;
