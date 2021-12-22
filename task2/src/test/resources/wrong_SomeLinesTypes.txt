@@ -1,0 +1,8 @@
+abcd
+RECTANGLE
+CIRCLE
+TRIANGLE
+8 10
+1 2 3
+5 1
+

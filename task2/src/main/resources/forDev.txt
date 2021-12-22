@@ -1,0 +1,2 @@
+Triangle
+5 6 www *** 10 abc
