@@ -18,7 +18,7 @@ public class Application {
         Model model = new GameModel(view);
         model.setTimer(timerGame);
 
-        Controller controller = new GameController(view, model);
+        Controller controller = new GameController(model);
         controller.notifyAboutNewGame();
 
         view.setController(controller);
