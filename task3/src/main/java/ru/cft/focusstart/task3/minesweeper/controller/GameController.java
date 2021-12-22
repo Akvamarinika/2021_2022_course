@@ -8,11 +8,9 @@ import ru.cft.focusstart.task3.minesweeper.view.*;
 
 @Slf4j
 public class GameController implements Controller{
-    private final View view;
     private final Model model;
 
-    public GameController(View swingView, Model model) {
-        this.view = swingView;
+    public GameController(Model model) {
         this.model = model;
     }
 
