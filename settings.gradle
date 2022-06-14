@@ -1,4 +1,4 @@
-rootProject.name = '2021_02_veselova'
+rootProject.name = '2021_2022_course'
 include 'task1'
 include 'task2'
 include 'task3'
